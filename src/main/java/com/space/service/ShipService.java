@@ -18,11 +18,11 @@ public interface ShipService {
                           Double minSpeed, Double maxSpeed, Integer minCrewSize, Integer maxCrewSize,
                           Double minRating, Double maxRating);
 
-    ResponseEntity<?> createShip(Ship ship);
+    ResponseEntity<Ship> createShip(Ship ship);
 
-    ResponseEntity<?> getShip(Long id);
+    ResponseEntity<Ship> getShip(Long id);
 
-    ResponseEntity<?> updateShip(Long id, Ship ship);
+    ResponseEntity<Ship> updateShip(Long id, Ship ship);
 
-    ResponseEntity<?> deleteShip(Long id);
+    ResponseEntity<Ship> deleteShip(Long id);
 }

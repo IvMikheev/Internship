@@ -4,10 +4,8 @@ import com.space.model.Ship;
 import com.space.model.ShipType;
 import com.space.service.ShipService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -22,7 +20,7 @@ public class ShipController {
     }
 
     @GetMapping(value = "/ships")
-    public List<Ship> allShips(
+    public List<Ship> getShipsList(
             @RequestParam(name = "name", required = false) String name,
             @RequestParam(name = "planet", required = false) String planet,
             @RequestParam(name = "shipType", required = false) ShipType shipType,
@@ -44,7 +42,7 @@ public class ShipController {
     }
 
     @GetMapping(value = "/ships/count")
-    public Integer shipsCount(
+    public Integer getShipsCount(
             @RequestParam(name = "name", required = false) String name,
             @RequestParam(name = "planet", required = false) String planet,
             @RequestParam(name = "shipType", required = false) ShipType shipType,
@@ -60,5 +58,25 @@ public class ShipController {
 
         return shipService.getShipsCount(name, planet, shipType, after, before, isUsed, minSpeed, maxSpeed,
                                          minCrewSize, maxCrewSize, minRating, maxRating);
+    }
+
+    @PostMapping(value = "/ships")
+    public ResponseEntity<Ship> createShip(@RequestBody Ship ship) {
+        return shipService.createShip(ship);
+    }
+
+    @GetMapping(value = "ships/{id}")
+    public ResponseEntity<Ship> getShip(@PathVariable Long id) {
+        return shipService.getShip(id);
+    }
+
+    @PostMapping(value = "/ships/{id}")
+    public ResponseEntity<Ship> updateShip(@PathVariable Long id, @RequestBody Ship ship) {
+        return shipService.updateShip(id, ship);
+    }
+
+    @DeleteMapping(value = "/ships/{id}")
+    public ResponseEntity<Ship> deleteShip(@PathVariable Long id) {
+        return shipService.deleteShip(id);
     }
 }
