@@ -4,6 +4,7 @@ import com.space.model.Ship;
 import com.space.model.ShipType;
 import com.space.service.ShipService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,7 +21,7 @@ public class ShipController {
     }
 
     @GetMapping(value = "/ships")
-    public List<Ship> getShipsList(
+    public ResponseEntity<List<Ship>> getShipsList(
             @RequestParam(name = "name", required = false) String name,
             @RequestParam(name = "planet", required = false) String planet,
             @RequestParam(name = "shipType", required = false) ShipType shipType,
@@ -37,12 +38,12 @@ public class ShipController {
             @RequestParam(name = "pageNumber", required = false, defaultValue = "0") Integer pageNumber,
             @RequestParam(name = "pageSize", required = false, defaultValue = "3") Integer pageSize) {
 
-        return shipService.getShipsList(name, planet, shipType, after, before, isUsed, minSpeed, maxSpeed,
-                                        minCrewSize, maxCrewSize, minRating, maxRating, order, pageNumber, pageSize);
+        return new ResponseEntity<>(shipService.getShipsList(name, planet, shipType, after, before, isUsed, minSpeed,
+                maxSpeed, minCrewSize, maxCrewSize, minRating, maxRating, order, pageNumber, pageSize), HttpStatus.OK);
     }
 
     @GetMapping(value = "/ships/count")
-    public Integer getShipsCount(
+    public ResponseEntity<Integer> getShipsCount(
             @RequestParam(name = "name", required = false) String name,
             @RequestParam(name = "planet", required = false) String planet,
             @RequestParam(name = "shipType", required = false) ShipType shipType,
@@ -56,8 +57,8 @@ public class ShipController {
             @RequestParam(name = "minRating", required = false) Double minRating,
             @RequestParam(name = "maxRating", required = false) Double maxRating) {
 
-        return shipService.getShipsCount(name, planet, shipType, after, before, isUsed, minSpeed, maxSpeed,
-                                         minCrewSize, maxCrewSize, minRating, maxRating);
+        return new ResponseEntity<>(shipService.getShipsCount(name, planet, shipType, after, before, isUsed, minSpeed,
+                                            maxSpeed, minCrewSize, maxCrewSize, minRating, maxRating), HttpStatus.OK);
     }
 
     @PostMapping(value = "/ships")
