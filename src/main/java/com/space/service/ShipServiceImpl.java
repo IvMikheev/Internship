@@ -49,8 +49,7 @@ public class ShipServiceImpl implements ShipService {
             Calendar calendar = Calendar.getInstance();
             calendar.setTimeInMillis(before);
             calendar.set(calendar.get(Calendar.YEAR), Calendar.JANUARY, 1, 0, 0, 0);
-            Date dateBefore = new Date(calendar.getTimeInMillis() - 1L);
-            predicates.add(criteriaBuilder.and(criteriaBuilder.lessThanOrEqualTo(root.get("prodDate"), dateBefore)));
+            predicates.add(criteriaBuilder.and(criteriaBuilder.lessThanOrEqualTo(root.get("prodDate"), new Date(calendar.getTimeInMillis()))));
         }
         if (isUsed != null) predicates.add(criteriaBuilder.and(criteriaBuilder.equal(root.get("isUsed"), isUsed)));
         if (minSpeed != null)
